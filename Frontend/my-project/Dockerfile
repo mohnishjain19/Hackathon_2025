@@ -1,13 +1,13 @@
-# Use official Nginx image
-FROM nginx:alpine
+    # Build Stage
+    FROM node:lts-alpine as builder
+    WORKDIR /app
+    COPY package*.json ./
+    RUN npm install
+    COPY . .
+    RUN npm run build
 
-# Copy custom nginx config
-COPY nginx.conf /etc/nginx/nginx.conf
-
-# Copy built frontend
-COPY dist/ /usr/share/nginx/html
-
-# Expose port for Cloud Run
-EXPOSE 8080
-
-CMD ["nginx", "-g", "daemon off;"]
+    # Serve Stage
+    FROM nginx:alpine
+    COPY --from=builder /app/build /usr/share/nginx/html
+    EXPOSE 80
+    CMD ["nginx", "-g", "daemon off;"]
