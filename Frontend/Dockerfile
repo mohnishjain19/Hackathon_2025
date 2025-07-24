@@ -1,8 +1,7 @@
 # Stage 1 - build
 FROM node:22 AS build
 WORKDIR /app
-RUN ls -l
-RUN pwd
+
 COPY ./my-project/package.json ./
 COPY ./my-project/vite.config.ts ./
 COPY ./my-project/index.html ./
@@ -16,8 +15,7 @@ COPY ./my-project/.env ./
 RUN npm install
 # COPY Frontend/my-project .
 RUN npm run build
-RUN pwd
-RUN ls -l
+
 
 # Stage 2 - serve
 FROM nginx:alpine
