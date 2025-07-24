@@ -4,7 +4,7 @@ FROM node:22 AS build
 RUN ls -l
 RUN pwd
 COPY package.json .
-RUN npm ci
+RUN npm install
 COPY Frontend/my-project .
 RUN npm run build
 
