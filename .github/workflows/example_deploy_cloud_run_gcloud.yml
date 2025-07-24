@@ -33,7 +33,7 @@ jobs:
 
       - name: Install frontend dependencies
         working-directory: Frontend/my-project
-        run: npm install && npm run dev
+        run: npm install
 
       - name: Create .env file
         working-directory: Frontend/my-project
