@@ -48,7 +48,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          gcloud builds submit --tag gcr.io/hack-team-finclude/github-cloud-run-service Frontend/my-project --service-account="projects/hack-team-finclude/serviceAccounts/infrastructure@hack-team-finclude.iam.gserviceaccount.com" --gcs-log-dir="gs://logs_bucket_finclude" --project="hack-team-finclude"
+          gcloud builds submit --tag gcr.io/hack-team-finclude/github-cloud-run-service Frontend/my-project --service-account="projects/hack-team-finclude/serviceAccounts/workload@hack-team-finclude.iam.gserviceaccount.com" --gcs-log-dir="gs://logs_bucket_finclude" --project="hack-team-finclude"
 
       - name: Deploy to Cloud Run
         id: deploy
