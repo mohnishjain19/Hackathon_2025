@@ -1,6 +1,6 @@
 # Stage 1 - build
 FROM node:22 AS build
-# WORKDIR /app
+WORKDIR /app
 RUN ls -l
 RUN pwd
 COPY package.json ./
