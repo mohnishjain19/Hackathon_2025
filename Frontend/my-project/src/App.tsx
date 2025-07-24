@@ -1,15 +1,13 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 import { Form } from "./Components/Form"
-import { AdminAuthentication} from "./Components/AdminAuthentication"
+import { AdminAuthentication} from "../src/Components/Admins/AdminAuthentication"
 
 import { Home } from "./Components/Home"
 import { Layout } from "./Components/Layout/layout"
-import { AdminPortal } from "./Components/AdminPortal"
+import { AdminPortal } from "../src/Components/Admins/AdminPortal"
 import { useState } from "react"
 
 function App() {
-
-  
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   
   return (
