@@ -4,7 +4,7 @@ import { AdminAuthentication} from "../src/Components/Admins/AdminAuthentication
 
 import { Home } from "./Components/Home"
 import { Layout } from "./Components/Layout/layout"
-import { AdminPortal } from "../src/Components/Admins/AdminPortal"
+import { AdminPortal } from "./Components/Admins/AdminPortal"
 import { useState } from "react"
 
 function App() {
