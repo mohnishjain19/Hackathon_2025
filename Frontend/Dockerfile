@@ -20,5 +20,5 @@ RUN ls -l
 
 # Stage 2 - serve
 FROM nginx:alpine
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY ./my-project/nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /app/dist /usr/share/nginx/html
