@@ -6,6 +6,8 @@ import { Home } from "./Components/Home"
 import { Layout } from "./Components/Layout/layout"
 import { AdminPortal } from "./Components/Admins/AdminPortal"
 import { useState } from "react"
+import { About } from "./Components/About"
+
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -30,6 +32,7 @@ function App() {
             }
           />
         <Route path="/form" element={<Form />}></Route>
+        <Route path="/about" element={<About />} />
       </Route>
     </Routes>
     </>
