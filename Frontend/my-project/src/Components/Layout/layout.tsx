@@ -38,6 +38,7 @@ export const Layout = () => {
         </h1>
         <Link to="/" className="hover:underline">Home</Link>
         <Link to="/form" className="hover:underline">Form</Link>
+        <Link to="/about" className="hover:underline">About</Link>
       </div>
   
       {/* Right: Admin Login + Theme Toggle */}
