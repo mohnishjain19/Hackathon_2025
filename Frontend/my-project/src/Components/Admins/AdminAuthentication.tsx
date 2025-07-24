@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // to navigate to /adminportal
 
-export const AdminAuthentication = ({setIsAuthenticated}) => {
+
+interface Props {
+  setIsAuthenticated: (auth: boolean) => void;
+}
+
+
+export const AdminAuthentication: React.FC<Props> = ({setIsAuthenticated}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (username.trim() !== '' && password.trim() !== '') {
