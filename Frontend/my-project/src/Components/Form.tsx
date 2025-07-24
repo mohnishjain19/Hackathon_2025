@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { db } from "../Components/Config/firebaseConfig";
+import { db } from "./Config/firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 
 declare global {
@@ -23,7 +23,6 @@ export const Form = () => {
     phone: "",
     scheme: "",
   });
-  const [submitted, setSubmitted] = useState(false);
   const [listeningField, setListeningField] = useState<null | string>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +37,6 @@ export const Form = () => {
     try {
       await addDoc(collection(db, "userForms"), formData);
       alert("Data saved successfully!");
-      setSubmitted(true);
       setFormData({ name: "", phone: "", scheme: "" });
     } catch (error) {
       console.error("Error adding document: ", error);
