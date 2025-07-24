@@ -1,4 +1,6 @@
-name: Example - Deploy Cloud Run using gcloud
+
+name: Example - Deploy React Frontend to Cloud Run using gcloud
+
 on:
   workflow_dispatch:
 
@@ -11,48 +13,70 @@ jobs:
       id-token: 'write'
 
     steps:
-      # actions/checkout MUST come before auth
-      - name: 'Checkout'
-        uses: 'actions/checkout@v4'
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: 'Authenticate to GCP as Infrastructure SA for deployment'
-        uses: 'google-github-actions/auth@v2'
+      - name: Authenticate to GCP as Infrastructure SA
+        uses: google-github-actions/auth@v2
         with:
           export_environment_variables: true
-          project_id : hack-team-finclude
+          project_id: hack-team-finclude
           workload_identity_provider: projects/785558430619/locations/global/workloadIdentityPools/github-2023/providers/github-2023
-          service_account: infrastructure@hack-team-finclude.iam.gserviceaccount.com  # Use your Infrastructure SA to manage resources
+          service_account: infrastructure@hack-team-finclude.iam.gserviceaccount.com
 
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v2'
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
 
-      - name: 'Deploy Cloud Run'
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install frontend dependencies
+        working-directory: Frontend/my-project
+        run: npm install
+
+      - name: Create .env file
+        working-directory: Frontend/my-project
+        run: |
+          echo "VITE_FIREBASE_API_KEY=${{ secrets.VITE_FIREBASE_API_KEY }}" >> .env
+          echo "VITE_FIREBASE_AUTH_DOMAIN=${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}" >> .env
+          echo "VITE_FIREBASE_PROJECT_ID=${{ secrets.VITE_FIREBASE_PROJECT_ID }}" >> .env
+
+      - name: Build frontend
+        working-directory: Frontend/my-project
+        run: npm run build
+
+      - name: Build Docker image
+        run: |
+          gcloud builds submit --tag gcr.io/hack-team-finclude/github-cloud-run-service Frontend/my-project --service-account="projects/hack-team-finclude/serviceAccounts/workload@hack-team-finclude.iam.gserviceaccount.com" --gcs-log-dir="gs://logs_bucket_finclude" --project="hack-team-finclude"
+
+      - name: Deploy to Cloud Run
         id: deploy
         env:
           REGION: 'europe-west1'
           SERVICE_NAME: 'github-cloud-run-service'
           WORKLOAD_SA_EMAIL: workload@hack-team-finclude.iam.gserviceaccount.com
         run: |
-          set -e
           gcloud run deploy "${SERVICE_NAME}" \
             --region "${REGION}" \
-            --image "gcr.io/cloudrun/hello" \
-            --service-account="${WORKLOAD_SA_EMAIL}"  # Use your Workload SA to attach to resources
-          
+            --image "gcr.io/hack-team-finclude/github-cloud-run-service" \
+            --service-account="${WORKLOAD_SA_EMAIL}" \
+            --allow-unauthenticated
+
           url=$(gcloud run services describe "${SERVICE_NAME}" --region="${REGION}" --format="value(status.url)")
           echo "url=${url}" >> "${GITHUB_OUTPUT}"
 
-      # Only needed to get an ID token to simulate an authenticated curl call.
-      # Not needed for deployment.
-      - name: 'Authenticate to GCP as workload SA for invocation'
-        id: 'auth'
-        uses: 'google-github-actions/auth@v2'
+      - name: Authenticate for Test Request
+        id: auth
+        uses: google-github-actions/auth@v2 	
         with:
           token_format: 'id_token'
           workload_identity_provider: projects/785558430619/locations/global/workloadIdentityPools/github-2023/providers/github-2023
-          service_account: workload@hack-team-finclude.iam.gserviceaccount.com  # Use your Workload SA to interact with resources
+          service_account: workload@hack-team-finclude.iam.gserviceaccount.com
           id_token_audience: ${{ steps.deploy.outputs.url }}
           id_token_include_email: true
 
-      - name: 'Poke Cloud Run'
-        run: 'curl -H "Authorization: Bearer ${{ steps.auth.outputs.id_token }}" "${{ steps.deploy.outputs.url }}"'
+      - name: Poke Cloud Run Service
+        run: |
+          curl -H "Authorization: Bearer ${{ steps.auth.outputs.id_token }}" "${{ steps.deploy.outputs.url }}"
