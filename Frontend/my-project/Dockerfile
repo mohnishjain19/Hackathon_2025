@@ -3,7 +3,12 @@ FROM node:22 AS build
 # WORKDIR /app
 RUN ls -l
 RUN pwd
-COPY package.json .
+COPY package.json ./
+COPY tsconfig*.json ./            # include tsconfig.json, tsconfig.app.json, tsconfig.node.json if needed
+COPY vite.config.ts ./
+COPY index.html ./
+COPY nginx.conf ./
+COPY ./src ./src                    # include source files
 RUN npm install
 # COPY Frontend/my-project .
 RUN npm run build
