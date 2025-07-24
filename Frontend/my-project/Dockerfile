@@ -12,6 +12,8 @@ COPY ./src ./src                    # include source files
 RUN npm install
 # COPY Frontend/my-project .
 RUN npm run build
+RUN pwd
+RUN ls -l
 
 # Stage 2 - serve
 FROM nginx:alpine
