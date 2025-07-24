@@ -11,6 +11,7 @@ COPY ./my-project/tsconfig.json ./
 COPY ./my-project/tsconfig.app.json ./
 COPY ./my-project/tsconfig.node.json ./
 COPY ./my-project/nginx.conf ./
+COPY ./my-project/.env ./
 #COPY ./my-project/nginx.conf ./
 RUN npm install
 # COPY Frontend/my-project .
