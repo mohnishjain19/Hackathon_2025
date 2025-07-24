@@ -3,12 +3,12 @@ FROM node:22 AS build
 WORKDIR /app
 RUN ls -l
 RUN pwd
-COPY package.json ./
-COPY tsconfig.json ./            # include tsconfig.json, tsconfig.app.json, tsconfig.node.json if needed
-COPY vite.config.ts ./
-COPY index.html ./
-COPY nginx.conf ./
-COPY ./src ./src                    # include source files
+COPY ./my-project/package.json ./
+COPY ./my-project/vite.config.ts ./
+COPY ./my-project/index.html ./
+COPY ./my-project/src ./src
+COPY ./tsconfig*.json ./
+COPY ./nginx.conf ./                # include source files
 RUN npm install
 # COPY Frontend/my-project .
 RUN npm run build
