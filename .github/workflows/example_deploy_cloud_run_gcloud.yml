@@ -49,18 +49,18 @@ jobs:
 
       - name: Build Docker image
         run: |
-          gcloud builds submit --tag gcr.io/hack-team-finclude/github-cloud-run-service Frontend --service-account="projects/hack-team-finclude/serviceAccounts/workload@hack-team-finclude.iam.gserviceaccount.com" --gcs-log-dir="gs://logs_bucket_finclude" --project="hack-team-finclude"
+          gcloud builds submit --tag gcr.io/hack-team-finclude/finclude-kiosk Frontend --service-account="projects/hack-team-finclude/serviceAccounts/workload@hack-team-finclude.iam.gserviceaccount.com" --gcs-log-dir="gs://logs_bucket_finclude" --project="hack-team-finclude"
 
       - name: Deploy to Cloud Run
         id: deploy
         env:
           REGION: 'europe-west1'
-          SERVICE_NAME: 'github-cloud-run-service'
+          SERVICE_NAME: 'finclude-kiosk'
           WORKLOAD_SA_EMAIL: workload@hack-team-finclude.iam.gserviceaccount.com
         run: |
           gcloud run deploy "${SERVICE_NAME}" \
             --region "${REGION}" \
-            --image "gcr.io/hack-team-finclude/github-cloud-run-service" \
+            --image "gcr.io/hack-team-finclude/finclude-kiosk" \
             --service-account="${WORKLOAD_SA_EMAIL}" \
             --allow-unauthenticated
 
