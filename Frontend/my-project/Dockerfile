@@ -5,7 +5,7 @@ RUN ls -l
 RUN pwd
 COPY package.json .
 RUN npm install
-COPY Frontend/my-project .
+# COPY Frontend/my-project .
 RUN npm run build
 
 # Stage 2 - serve
