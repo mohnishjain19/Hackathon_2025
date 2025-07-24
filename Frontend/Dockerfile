@@ -7,7 +7,7 @@ COPY ./my-project/package.json ./
 COPY ./my-project/vite.config.ts ./
 COPY ./my-project/index.html ./
 COPY ./my-project/src ./src
-COPY ./tsconfig*.json ./
+COPY ./tsconfig.json ./
 COPY ./nginx.conf ./                # include source files
 RUN npm install
 # COPY Frontend/my-project .
