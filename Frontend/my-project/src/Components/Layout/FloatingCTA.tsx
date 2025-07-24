@@ -1,5 +1,4 @@
-// src/Components/Layout/FloatingCTA.tsx
-import React from "react";
+// src/Components/Layout/F
 import { Link } from "react-router-dom";
 
 export const FloatingCTA = () => {

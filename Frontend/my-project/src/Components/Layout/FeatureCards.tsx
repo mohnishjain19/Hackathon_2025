@@ -1,5 +1,4 @@
-// FeatureCards.tsx
-import React from "react";
+
 
 export const FeatureCards = () => {
   return (
