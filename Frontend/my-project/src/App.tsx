@@ -1,17 +1,36 @@
-import { Route, Routes } from "react-router-dom"
+import { Navigate, Route, Routes } from "react-router-dom"
 import { Form } from "./Components/Form"
-import { HelpDesk } from "./Components/HelpDesk"
+import { AdminAuthentication} from "./Components/AdminAuthentication"
+
 import { Home } from "./Components/Home"
 import { Layout } from "./Components/Layout/layout"
+import { AdminPortal } from "./Components/AdminPortal"
+import { useState } from "react"
 
 function App() {
 
+  
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
   return (
     <>
     <Routes >
       <Route element={<Layout />}>
         <Route path="/" element={<Home />}></Route>
-        <Route path="/help-desk" element={<HelpDesk />}></Route>
+        <Route
+            path="/admin-authentication"
+            element={<AdminAuthentication setIsAuthenticated={setIsAuthenticated} />}
+          />
+        <Route
+            path="/admin-portal"
+            element={
+              isAuthenticated ? (
+                <AdminPortal />
+              ) : (
+                <Navigate to="/admin-authentication" replace />
+              )
+            }
+          />
         <Route path="/form" element={<Form />}></Route>
       </Route>
     </Routes>
@@ -19,4 +38,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
