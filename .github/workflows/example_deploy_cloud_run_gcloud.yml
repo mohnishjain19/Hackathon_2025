@@ -1,3 +1,4 @@
+
 name: Example - Deploy React Frontend to Cloud Run using gcloud
 
 on:
@@ -48,7 +49,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          gcloud builds submit --tag gcr.io/hack-team-finclude/github-cloud-run-service Frontend/my-project --service-account infrastructure@hack-team-finclude.iam.gserviceaccount.com --gcs-log-dir gs://logs_bucket_finclude
+          gcloud builds submit --tag gcr.io/hack-team-finclude/github-cloud-run-service Frontend --service-account="projects/hack-team-finclude/serviceAccounts/workload@hack-team-finclude.iam.gserviceaccount.com" --gcs-log-dir="gs://logs_bucket_finclude" --project="hack-team-finclude"
 
       - name: Deploy to Cloud Run
         id: deploy
@@ -68,7 +69,7 @@ jobs:
 
       - name: Authenticate for Test Request
         id: auth
-        uses: google-github-actions/auth@v2
+        uses: google-github-actions/auth@v2 	
         with:
           token_format: 'id_token'
           workload_identity_provider: projects/785558430619/locations/global/workloadIdentityPools/github-2023/providers/github-2023

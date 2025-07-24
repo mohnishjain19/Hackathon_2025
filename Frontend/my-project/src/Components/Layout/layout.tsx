@@ -47,6 +47,7 @@ export const Layout = () => {
           <nav className="ml-6 flex space-x-4">
             <Link to="/" className="hover:underline">Home</Link>
             <Link to="/form" className="hover:underline">Form</Link>
+            <Link to="/about" className="hover:underline">About</Link>
           </nav>
         </div>
         <div className="flex items-center space-x-4">
@@ -82,6 +83,7 @@ export const Layout = () => {
           <Link to="/terms" className="hover:underline">Terms</Link>
         </div>
       </footer>
+
     </div>
   );
 };
