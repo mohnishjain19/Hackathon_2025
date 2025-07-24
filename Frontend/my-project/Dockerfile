@@ -1,13 +1,12 @@
-    # Build Stage
-    FROM node:lts-alpine as builder
-    WORKDIR /app
-    COPY package*.json ./
-    RUN npm install
-    COPY . .
-    RUN npm run build
+# Stage 1 - build
+FROM node:20 AS build
+WORKDIR /app
+COPY Frontend/my-project/package*.json ./
+RUN npm ci
+COPY Frontend/my-project .
+RUN npm run build
 
-    # Serve Stage
-    FROM nginx:alpine
-    COPY --from=builder /app/build /usr/share/nginx/html
-    EXPOSE 80
-    CMD ["nginx", "-g", "daemon off;"]
+# Stage 2 - serve
+FROM nginx:alpine
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /app/dist /usr/share/nginx/html
