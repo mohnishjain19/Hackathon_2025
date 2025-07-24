@@ -4,7 +4,7 @@ WORKDIR /app
 RUN ls -l
 RUN pwd
 COPY package.json ./
-COPY tsconfig*.json ./            # include tsconfig.json, tsconfig.app.json, tsconfig.node.json if needed
+COPY tsconfig.json ./            # include tsconfig.json, tsconfig.app.json, tsconfig.node.json if needed
 COPY vite.config.ts ./
 COPY index.html ./
 COPY nginx.conf ./
