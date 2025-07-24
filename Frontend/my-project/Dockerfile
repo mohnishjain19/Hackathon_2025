@@ -1,7 +1,7 @@
 # Stage 1 - build
 FROM node:22 AS build
 WORKDIR /app
-COPY Frontend/my-project/package*.json ./
+COPY Frontend/my-project/package.json .
 RUN npm ci
 COPY Frontend/my-project .
 RUN npm run build
