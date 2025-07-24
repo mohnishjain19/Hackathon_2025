@@ -1,5 +1,4 @@
 // TopBar.tsx
-import React from "react";
 import { Link } from "react-router-dom";
 import { IoSunny, IoMoon } from "react-icons/io5";
 import logo from "../../assets/finclude.jpg";

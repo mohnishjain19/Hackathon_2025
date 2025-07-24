@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, Link, useLocation } from "react-router-dom";
 import { IoSunny, IoMoon } from "react-icons/io5";
 import logo from "../../assets/finclude.jpg";
