@@ -7,8 +7,8 @@ COPY ./my-project/package.json ./
 COPY ./my-project/vite.config.ts ./
 COPY ./my-project/index.html ./
 COPY ./my-project/src ./src
-COPY ./tsconfig.json ./
-COPY ./nginx.conf ./                # include source files
+COPY ./my-project/tsconfig.json ./
+COPY ./my-project/nginx.conf ./                # include source files
 RUN npm install
 # COPY Frontend/my-project .
 RUN npm run build
