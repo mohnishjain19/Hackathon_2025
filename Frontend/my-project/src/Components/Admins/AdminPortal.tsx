@@ -1,19 +1,32 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
+// @ts-ignore
 import { db } from "../Config/firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 
+interface UserForm {
+  id: string;
+  name: string;
+  phone: string;
+  scheme: string;
+}
+
 export const AdminPortal = () => {
-  const [userForms, setUserForms] = useState([]);
+  const [userForms, setUserForms] = useState<UserForm[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchForms = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "userForms"));
-        const forms = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+        const forms: UserForm[] = querySnapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            name: data.name || "",
+            phone: data.phone || "",
+            scheme: data.scheme || "",
+          };
+        });
         setUserForms(forms);
       } catch (error) {
         console.error("Error fetching user forms:", error);
