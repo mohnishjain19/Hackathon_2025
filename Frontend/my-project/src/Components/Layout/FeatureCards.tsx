@@ -1,5 +1,3 @@
-
-// src/components/FeatureCards.tsx
 import React from "react";
 import { translations } from "../../locales";
 import type { LanguageCode } from "../../locales";

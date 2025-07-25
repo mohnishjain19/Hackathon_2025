@@ -3,11 +3,6 @@ import type { LanguageCode } from "../../locales";
 import { FaComments } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
-
-interface FloatingCTAProps {
-  lang: LanguageCode;
-}
-
 export const FloatingCTA: React.FC<FloatingCTAProps> = () => {
 
   const [bounce, setBounce] = useState(true);
