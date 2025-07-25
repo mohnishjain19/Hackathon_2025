@@ -199,4 +199,21 @@
       <span id="dialogMessage">A dialog that is opened by default.</span>
     </div>
   </md-dialog>
+
+
+<script>
+  function toggleConfig() {
+    const configDiv = document.getElementById("advanced-config");
+    const toggleBtn = event.target;
+
+    if (configDiv.style.display === "none") {
+      configDiv.style.display = "block";
+      toggleBtn.textContent = "Hide Advanced Settings";
+    } else {
+      configDiv.style.display = "none";
+      toggleBtn.textContent = "Show Advanced Settings";
+    }
+  }
+</script>
+
 </body>
