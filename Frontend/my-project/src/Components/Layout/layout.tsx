@@ -11,6 +11,8 @@ import type { LanguageCode } from "../../locales";
 import "../../App.css";
 
 export const Layout = () => {
+
+  
   const location = useLocation();
   const hideFeatures =
     location.pathname.startsWith("/form") || location.pathname.startsWith("/admin");

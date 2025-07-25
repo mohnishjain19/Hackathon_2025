@@ -5,7 +5,7 @@ window.addEventListener("load", (event) => {
     setAvailableMicrophoneOptions();
 });
 
-const PROXY_URL = "ws://localhost:8080";
+const PROXY_URL = "wss://finclude-agent-server-d7ngpozpkq-ew.a.run.app";
 const PROJECT_ID = "hack-team-finclude";
 const MODEL = "gemini-live-2.5-flash-preview-native-audio";
 const API_HOST = "europe-west1-aiplatform.googleapis.com";
