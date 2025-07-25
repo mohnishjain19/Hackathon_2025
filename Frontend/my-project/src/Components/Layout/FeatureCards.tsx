@@ -1,4 +1,3 @@
-// src/components/FeatureCards.tsx
 import React from "react";
 import { translations } from "../../locales";
 import type { LanguageCode } from "../../locales";
@@ -33,7 +32,7 @@ export const FeatureCards: React.FC<Props> = ({ lang }) => {
       bg: "bg-yellow-100 dark:bg-yellow-800"
     },
   ];
-
+  
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 p-4 mt-4">
       {features.map((feature, idx) => (

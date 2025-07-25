@@ -1,6 +1,5 @@
 
-name: Example - Deploy React Frontend to Cloud Run using gcloud
-
+name: websocket deploy to cloud run
 on:
   workflow_dispatch:
 
@@ -26,41 +25,21 @@ jobs:
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-
-      - name: Install frontend dependencies
-        working-directory: Frontend/my-project
-        run: npm install
-
-      - name: Create .env file
-        working-directory: Frontend/my-project
-        run: |
-          echo "VITE_FIREBASE_API_KEY=${{ secrets.VITE_FIREBASE_API_KEY }}" >> .env         
-          echo "VITE_FIREBASE_AUTH_DOMAIN=${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}" >> .env
-          echo "VITE_FIREBASE_PROJECT_ID=${{ secrets.VITE_FIREBASE_PROJECT_ID }}" >> .env
-
-      - name: Build frontend
-        working-directory: Frontend/my-project
-        run: npm run build
-
+        
       - name: Build Docker image
         run: |
-          gcloud builds submit --tag gcr.io/hack-team-finclude/finclude-kiosk Frontend --service-account="projects/hack-team-finclude/serviceAccounts/workload@hack-team-finclude.iam.gserviceaccount.com" --gcs-log-dir="gs://logs_bucket_finclude" --project="hack-team-finclude"
+          gcloud builds submit --tag gcr.io/hack-team-finclude/finclude-agent websocket-demo-app --service-account="projects/hack-team-finclude/serviceAccounts/workload@hack-team-finclude.iam.gserviceaccount.com" --gcs-log-dir="gs://logs_bucket_finclude" --project="hack-team-finclude"
 
       - name: Deploy to Cloud Run
         id: deploy
         env:
           REGION: 'europe-west1'
-          SERVICE_NAME: 'finclude-kiosk'
+          SERVICE_NAME: 'finclude-agent'
           WORKLOAD_SA_EMAIL: workload@hack-team-finclude.iam.gserviceaccount.com
         run: |
           gcloud run deploy "${SERVICE_NAME}" \
             --region "${REGION}" \
-            --image "gcr.io/hack-team-finclude/finclude-kiosk" \
+            --image "gcr.io/hack-team-finclude/finclude-agent" \
             --service-account="${WORKLOAD_SA_EMAIL}" \
             --allow-unauthenticated
 
@@ -80,3 +59,4 @@ jobs:
       - name: Poke Cloud Run Service
         run: |
           curl -H "Authorization: Bearer ${{ steps.auth.outputs.id_token }}" "${{ steps.deploy.outputs.url }}"
+    
