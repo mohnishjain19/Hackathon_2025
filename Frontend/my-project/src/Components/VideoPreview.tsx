@@ -37,7 +37,17 @@ const VideoPreview: React.FC<Props> = ({
   useEffect(() => {
     setRef(videoRef.current);
     registerReset(resetVideo);
-  }, []);
+    const video = videoRef.current;
+    if (!video || isClicked) return;
+
+    if (isHovered) {
+      video.currentTime = 0; // Start from beginning
+      video.play().catch(console.error);
+    } else {
+      video.pause();
+      video.currentTime = 0;
+    }
+  }, [isHovered, isClicked]);
 
   const handleMouseEnter = () => {
     if (!isClicked) onHover();

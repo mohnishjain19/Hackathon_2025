@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
+import type { LanguageCode } from "../../locales";
 import { FaComments } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
-export const FloatingCTA = () => {
+export const FloatingCTA: React.FC<FloatingCTAProps> = () => {
+
   const [bounce, setBounce] = useState(true);
 
   useEffect(() => {
