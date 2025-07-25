@@ -1,0 +1,31 @@
+@keyframes marquee {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
+  .marquee-container {
+    background: linear-gradient(to right, #6366f1, #ec4899, #facc15); /* indigo to pink to yellow */
+    color: white;
+    padding: 0.4rem 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0; /* REMOVE any top/bottom margin */
+  }
+  
+  .animate-marquee {
+    display: inline-block;
+    white-space: nowrap;
+    animation: marquee 45s linear infinite; /* Slower speed */
+    animation-play-state: running;
+  }
+  
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
+  
