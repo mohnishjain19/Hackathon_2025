@@ -29,78 +29,77 @@
   <script defer src="script.js"></script>
 </head>
 <body>
-  <h1 class="md-typescale-display-medium">FINCLUDE Live API</h1>
+  <h1 class="md-typescale-display-medium">FINCLUDE Live</h1>
   <p class="md-typescale-body-medium">
     The FINCLUDE Live API enables two-way interaction
   </p>
   <br />
 
   <div id="model-config-container">
-    <div>
-      <md-outlined-text-field
-        id="token"
-        label="Access Token"
-        value=""
-        type="password"
-      ></md-outlined-text-field>
-      <br />
-      <br />
-      <md-outlined-text-field
-        id="project"
-        label="Project ID"
-        value=""
-      ></md-outlined-text-field>
-    </div>
+<!-- Toggle button to show/hide advanced config -->
+<md-outlined-button onclick="toggleConfig()">Show Advanced Settings</md-outlined-button>
+<br /><br />
 
-    <div class="modality-container">
-      <p class="md-typescale-body-medium" style="margin-top: 0">
-        Model response type
-      </p>
+<!-- This will be hidden by default -->
+<div id="advanced-config" style="display: none;">
+  <md-outlined-text-field
+    id="token"
+    label="Access Token"
+    value=""
+    type="password"
+  ></md-outlined-text-field>
+  <br /><br />
+  <md-outlined-text-field
+    id="project"
+    label="Project ID"
+    value=""
+  ></md-outlined-text-field>
 
-      <form>
-        <md-radio
-          id="audio-radio"
-          name="responseModality"
-          value="AUDIO"
-          checked="checked"
-        ></md-radio>
-        <label for="audio-radio">
-          <span class="material-symbols-outlined"> volume_up </span>
-          <span class="icon-text">Audio</span>
-        </label>
+  <div class="modality-container">
+    <p class="md-typescale-body-medium" style="margin-top: 0">
+      Model response type
+    </p>
 
-        <br /><br />
-
-        <md-radio
-          id="text-radio"
-          name="responseModality"
-          value="TEXT"
-        ></md-radio>
-        <label for="text-radio">
-          <span class="material-symbols-outlined"> text_fields </span>
-          <span class="icon-text">Text</span>
-        </label>
-      </form>
-    </div>
-
-    <md-outlined-text-field
-      id="systemInstructions"
-      type="textarea"
-      label="System Instructions"
-      rows="3"
-    >
-    </md-outlined-text-field>
-
-    <div>
-      <br />
-      <md-outlined-button onclick="connectBtnClick()"
-        >Connect</md-outlined-button
-      >
+    <form>
+      <md-radio
+        id="audio-radio"
+        name="responseModality"
+        value="AUDIO"
+        checked="checked"
+      ></md-radio>
+      <label for="audio-radio">
+        <span class="material-symbols-outlined"> volume_up </span>
+        <span class="icon-text">Audio</span>
+      </label>
       <br /><br />
-      <md-outlined-button onclick="disconnectBtnClick()"
-        >Disconnect</md-outlined-button
-      >
-    </div>
+      <md-radio
+        id="text-radio"
+        name="responseModality"
+        value="TEXT"
+      ></md-radio>
+      <label for="text-radio">
+        <span class="material-symbols-outlined"> text_fields </span>
+        <span class="icon-text">Text</span>
+      </label>
+    </form>
+  </div>
+
+  <md-outlined-text-field
+    id="systemInstructions"
+    type="textarea"
+    label="System Instructions"
+    rows="3"
+  >
+  </md-outlined-text-field>
+</div>
+
+<!-- Connect/Disconnect buttons always visible -->
+<div>
+  <md-outlined-button onclick="connectBtnClick()">Connect</md-outlined-button>
+  <br /><br />
+  <md-outlined-button onclick="disconnectBtnClick()">Disconnect</md-outlined-button>
+</div>
+
   </div>
   <br />
 
