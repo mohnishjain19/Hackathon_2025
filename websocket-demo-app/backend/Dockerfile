@@ -5,17 +5,17 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Copy backend and frontend folders
-COPY backend/ ./backend/
+COPY . .
 #COPY frontend/ ./frontend/
 
 # Create virtual environment and install dependencies
 RUN python3 -m venv env && \
     . env/bin/activate && \
     pip install --upgrade pip && \
-    pip install -r backend/requirements.txt
+    pip install -r requirements.txt
 
 # Expose the port your backend listens on
 EXPOSE 8000
 
 # Start the backend WebSocket server
-CMD ["/bin/bash", "-c", ". env/bin/activate && python backend/main.py"]
+CMD ["/bin/bash", "-c", ". env/bin/activate && python main.py"]
