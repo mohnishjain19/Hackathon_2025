@@ -15,6 +15,6 @@ RUN pip3 install --no-cache-dir --break-system-packages -r app/requirements.txt
 COPY supervisord.conf /etc/supervisor/supervisord.conf
 COPY nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 8000
+EXPOSE 8080
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
