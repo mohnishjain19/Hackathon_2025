@@ -26,7 +26,37 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
         
-      - name: Install frontend dependencies
-        working-directory: websocket-demo-app/frontend
-        run: npm install
+      - name: Build Docker image
+        run: |
+          gcloud builds submit --tag gcr.io/hack-team-finclude/finclude-kiosk websocket-demo-app --service-account="projects/hack-team-finclude/serviceAccounts/workload@hack-team-finclude.iam.gserviceaccount.com" --gcs-log-dir="gs://logs_bucket_finclude" --project="hack-team-finclude"
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        env:
+          REGION: 'europe-west1'
+          SERVICE_NAME: 'finclude-agent'
+          WORKLOAD_SA_EMAIL: workload@hack-team-finclude.iam.gserviceaccount.com
+        run: |
+          gcloud run deploy "${SERVICE_NAME}" \
+            --region "${REGION}" \
+            --image "gcr.io/hack-team-finclude/finclude-agent" \
+            --service-account="${WORKLOAD_SA_EMAIL}" \
+            --allow-unauthenticated
+
+          url=$(gcloud run services describe "${SERVICE_NAME}" --region="${REGION}" --format="value(status.url)")
+          echo "url=${url}" >> "${GITHUB_OUTPUT}"
+
+      - name: Authenticate for Test Request
+        id: auth
+        uses: google-github-actions/auth@v2 	
+        with:
+          token_format: 'id_token'
+          workload_identity_provider: projects/785558430619/locations/global/workloadIdentityPools/github-2023/providers/github-2023
+          service_account: workload@hack-team-finclude.iam.gserviceaccount.com
+          id_token_audience: ${{ steps.deploy.outputs.url }}
+          id_token_include_email: true
+
+      - name: Poke Cloud Run Service
+        run: |
+          curl -H "Authorization: Bearer ${{ steps.auth.outputs.id_token }}" "${{ steps.deploy.outputs.url }}"
     
