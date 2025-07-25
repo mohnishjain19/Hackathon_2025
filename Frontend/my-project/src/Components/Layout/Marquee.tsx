@@ -1,6 +1,13 @@
-
 import "../../App.css";
-export const Marquee = () => {
+import type { LanguageCode } from "../../locales";
+
+
+interface MarqueeProps {
+  lang: LanguageCode;
+}
+
+
+export const Marquee: React.FC<MarqueeProps> = () => {
   return (
     <div className="marquee-container">
       <div className="animate-marquee">

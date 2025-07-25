@@ -1,7 +1,12 @@
-// src/Components/Layout/F
 import { Link } from "react-router-dom";
+import type { LanguageCode } from "../../locales";
 
-export const FloatingCTA = () => {
+
+interface FloatingCTAProps {
+  lang: LanguageCode;
+}
+
+export const FloatingCTA: React.FC<FloatingCTAProps> = () => {
   return (
     <div className="fixed bottom-5 right-5 z-50">
       <Link
