@@ -14,7 +14,7 @@ RUN python3 -m venv env && \
     pip install -r backend/requirements.txt
 
 # Expose the port your backend listens on
-EXPOSE 8080
+EXPOSE 8000
 
 # Start the backend WebSocket server
 CMD ["/bin/bash", "-c", ". env/bin/activate && python backend/main.py"]
